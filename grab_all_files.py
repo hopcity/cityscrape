@@ -16,6 +16,9 @@ def send_request():
         input: None
         output: None
 
+        TODO: remove any and all references to hardcoded filepaths that aren't bootstrapped in the
+              config or the setup script
+
     '''
     os.chdir('/home/clay/Downloads/stlCity')
 
