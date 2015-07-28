@@ -1,12 +1,25 @@
 #!/bin/bash -e
 
-#	Dowload city access databases and shapes
-./GrabAllFiles.py
+if [[ -z "$1" ]] : then
+	echo "Cityscape requires at least 1 argument - the database to be used for the ingest (currently \"postgresql\")"
+	exit 3
+fi
+
+CONFIGFILE="config/cityscrape-config.sh"
+
+# Bootstrap the config into our bash env
+. $CONFIGFILE
+
+# Activate virtualenv
+. $CITYSCRAPE_VIRTUALENV_DIR
+
+echo "Running Cityscrape"
+
+python $BASEDIR/grab_all_files.py
 
 #	Unzip Files
 cd zipFiles
 unzip -f "*.zip"
-
 
 for f in *.shp
 do
@@ -19,7 +32,7 @@ for f in *.mdb
 do
 	echo "Extracting tables from $f"
 
-	mdb-schema $f postgres | sed 's/Char/Varchar/g' | sed 's/Postgres_Unknown 0x0c/text/g' | psql -h localhost -U postgres -d city #> /dev/null 2>&1
+	mdb-schema $f postgres | sed 's/Char/Varchar/g' | sed 's/Postgres_Unknown 0x0c/text/g' | psql -h localhost -U postgres -d city
 
 	tables=$(echo -en $(mdb-schema $f postgres | grep "CREATE TABLE" | awk '{ print $3 }' | sed -e 's/"//g');)
 	for i in $tables

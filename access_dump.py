@@ -17,6 +17,8 @@ def csv_dump(tables, DATABASE):
       Dump each table as a CSV file using "mdb-export"
       converting " " in table names to "_" for the CSV filenames.
 
+      TODO: Throw this code out or refactor to use 'with as' standard
+
     '''
     for table in tables:
         if table != '':
