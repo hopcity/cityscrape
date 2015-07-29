@@ -4,11 +4,22 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/vivid64"
   # Change this to be something relevant to your project
   config.vm.hostname = "cityscrape"
 
-  config.vm.provision :shell, inline: "apt-get -y install python-setuptools libpq-dev python python-dev python-pip python-pip unzip zip libcurl4-openssl-dev postgresql postgres-xc-client postgres-xc"
+  config.vm.provision :shell, inline: "apt-get -y install --fix-missing"
+  config.vm.provision :shell, inline: "apt-get -y install python"
+  config.vm.provision :shell, inline: "apt-get -y install python-dev"
+  config.vm.provision :shell, inline: "apt-get -y install python-setuptools"
+  config.vm.provision :shell, inline: "apt-get -y install python-pip"
+  config.vm.provision :shell, inline: "apt-get -y install zip unzip"
+  config.vm.provision :shell, inline: "apt-get -y install libssl-dev"
+  config.vm.provision :shell, inline: "apt-get -y install libcurl4-openssl-dev"
+  config.vm.provision :shell, inline: "apt-get -y install libpq-dev"
+  config.vm.provision :shell, inline: "apt-get -y install postgresql"
+  config.vm.provision :shell, inline: "apt-get -y install postgresql-contrib"
+  config.vm.provision :shell, inline: "sudo -i -u postgres"
 
   # Copy dotfiles out of host homedir when they exist
   # Do not copy things like .bashrc since there are often many lines of code there that do not run
@@ -36,6 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Install Docker
   config.vm.provision :shell, inline: "wget -qO- https://get.docker.com/ | sh"
+  config.vm.provision :shell, inline: "apt-get -y update"
   config.vm.provision :shell, inline: "usermod -aG docker vagrant"
 
   # Install and Setup Gdal
