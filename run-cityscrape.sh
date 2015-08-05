@@ -11,14 +11,15 @@ CONFIGFILE="config/cityscrape-config.sh"
 . $CONFIGFILE
 
 # Activate virtualenv
-. $CITYSCRAPE_VIRTUALENV_DIR
+. $CITYSCRAPE_VIRTUALENV_DIR/bin/activate
 
 echo "Running Cityscrape"
 
 python $BASEDIR/grab_all_files.py
 
-#	Unzip Files
-cd zipFiles
+#	Push zip_files to the bash path and unzip files
+pushd zip_files
+
 unzip -f "*.zip"
 
 for f in *.shp
@@ -44,5 +45,6 @@ do
 
 done
 
-
+# return to project root $BASEDIR
+popd
 
