@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-if [[ -z "$1" ]] : then
+if [[ -z "$1" ]] ; then
 	echo "Cityscape requires at least 1 argument - the database to be used for the ingest (currently \"postgresql\")"
 	exit 3
 fi
@@ -15,10 +15,10 @@ CONFIGFILE="config/cityscrape-config.sh"
 
 echo "Running Cityscrape"
 
-python $BASEDIR/grab_all_files.py
+python $BASEDIR/src/grab_all_files.py
 
-#	Push zip_files to the bash path and unzip files
-pushd zip_files
+#	Push path to stack (as opposed to cd) and unzip files
+pushd $STL_CITY_DOWNLOAD_DIR
 
 unzip -f "*.zip"
 

@@ -65,3 +65,7 @@ cityscrape/*
 
 # Vagrant
 .vagrant/*
+
+# Tempfiles
+*.zip
+*.tmp

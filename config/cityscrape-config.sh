@@ -13,9 +13,9 @@ export CITYSCRAPE_VIRTUALENV_DIR=$BASEDIR/.py-env
 
 # URL housing zip files of open city data
 # Is this the actual scrape URL? I don't think it is
-export SCRAPE_URL='https://github.com/hopcity/cityscrape/'
+export GITHUB_URL='https://github.com/hopcity/cityscrape/'
+export SOURCEFILE_URL='http://dynamic.stlouis-mo.gov/citydata/downloads/'
 
-# Directory in which scripts residek and a subfolder, 'zipFiles' exists
-# for temporary file download and extraction before loading into database
-export STL_CITY_DIR=$BASEDIR/stl_city
+# temporary file download and extraction before loading into database
+export OUTPUT_DIR=$BASEDIR/stl_city_files/
 
