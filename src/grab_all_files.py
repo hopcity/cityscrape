@@ -6,7 +6,6 @@
 
 # Base Imports
 import re
-import wget
 import os
 import sys
 import logging
@@ -87,7 +86,7 @@ def main():
     logger.info('Fetching files now!')
     get_files(soup)
 
-    logger.info('CityScrape complete!')
+    logger.info('CityScrape download complete!')
 
 
 if __name__ == '__main__':
