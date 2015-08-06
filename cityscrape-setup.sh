@@ -6,8 +6,12 @@ CONFIGFILE="config/cityscrape-config.sh"
 . $CONFIGFILE
 
 # Create working directories for ingest
-mkdir zip_files
-mkdir stl_city
+if [ -d "$STL_CITY_DOWNLOAD_DIR" ]
+then
+  echo "$STL_CITY_DOWNLOAD_DIR already exists"
+else
+  mkdir $STL_CITY_DOWNLOAD_DIR
+fi
 
 # Need to install virtualenv first
 pip install virtualenv==1.10.1
