@@ -17,5 +17,5 @@ export GITHUB_URL='https://github.com/hopcity/cityscrape/'
 export SOURCEFILE_URL='http://dynamic.stlouis-mo.gov/citydata/downloads/'
 
 # temporary file download and extraction before loading into database
-export OUTPUT_DIR=$BASEDIR/stl_city_files/
+export OUTPUT_DIR=stl_city_files
 
