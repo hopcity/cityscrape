@@ -10,24 +10,31 @@ pushd $OUTPUT_DIR
 echo "Unzipping files..."
 unzip -f "*.zip"
 
-for f in *.shp
-	do
-		echo "Loading "$f
+if [ -z "$(ls *.shp)" ]
+	then
+		echo "No *.shp files found, exiting..."
+		break
+	else
+		for f in *.shp
+			do
+				echo "Loading "$f
 
-		ogr2ogr -overwrite -progress -skipfailures -f "PostgreSQL" PG:"host=localhost user=postgres dbname=city" $f#
+				ogr2ogr -overwrite -progress -skipfailures -f "PostgreSQL" PG:"host=localhost user=postgres dbname=city" $f#
 
-done
-
+			done
+fi
 
 for f in *.mdb
-do
-	echo "Extracting tables from $f"
 
-	mdb-schema $f postgres | sed 's/Char/Varchar/g' | sed 's/Postgres_Unknown 0x0c/text/g' | psql -h localhost -U postgres -d city
+	do
+		echo "Extracting tables from $f"
 
-	tables=$(echo -en $(mdb-schema $f postgres | grep "CREATE TABLE" | awk '{ print $3 }' | sed -e 's/"//g');)
+		mdb-schema $f postgres | sed 's/Char/Varchar/g' | sed 's/Postgres_Unknown 0x0c/text/g' | psql -h localhost -U postgres -d city
+
+		tables=$(echo -en $(mdb-schema $f postgres | grep "CREATE TABLE" | awk '{ print $3 }' | sed -e 's/"//g');)
 
 	for i in $tables
+
 		do
 			echo "[File: "$f" ]	[Table - "$i"]"
 
@@ -37,6 +44,6 @@ do
 
 done
 
-# return to project root $BASEDIR
+# # return to project root $BASEDIR
 popd
 

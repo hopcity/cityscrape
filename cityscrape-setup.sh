@@ -31,4 +31,6 @@ fi
 pip install beautifulsoup4==4.4.0
 pip install requests==2.7.0
 
-echo "Cityscrape setup complete!"
+# echo "Cityscrape setup complete!"
+
+sudo -u postgres psql
