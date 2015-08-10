@@ -18,7 +18,7 @@ import requests
 from util.log import configure_log
 
 # Globals
-OUTPUT_DIR = os.environ['OUTPUT_DIR']
+WORKDIR = os.environ['WORKDIR']
 SOURCEFILE_URL = os.environ['SOURCEFILE_URL']
 
 
@@ -52,24 +52,34 @@ def get_files(soup):
 
     for endpoint in soup.find_all('a', href=re.compile("\.zip")):
         link = endpoint['href']
+        logger.info("Link: {}".format(link))
 
-        if os.path.isfile(link) == False:
+        filename = '/'.join([WORKDIR, link])
+
+        download_link = source_files + link
+        logger.info('url: {}'.format(download_link))
+
+        if os.path.isfile(filename) == True:
+            logger.info('File: {} already exists'.format(link))
+
+        else:
             logger.info('Downloading ' + link)
-
-            filename = OUTPUT_DIR + link
-
-            download_link = source_files + link
-            logger.info('Http endpoint: {}'.format(download_link))
-
-            request = requests.get(download_link, stream=True)
+            try:
+                request = requests.get(download_link, stream=True)
+            except requests.exceptions.ConnectionError as err:
+                logger.warn("Manually Raised Error {}: {}".format(err.errno, err.strerror))
+                break
 
             with open(filename, 'wb') as f:
-                for chunk in request.iter_content(chunk_size=1024):
-                    if chunk:
-                        f.write(chunk)
-                        f.flush
-
-    logger.info('All zip files downloaded from ' + source_files)
+                logger.info("Writing out to file: {}".format(filename))
+                try:
+                    for chunk in request.iter_content(chunk_size=1024):
+                        if chunk:
+                            f.write(chunk)
+                            f.flush
+                except requests.exceptions.ConnectionError as err:
+                    logger.warn("Error: {} | {}".format(err.errno, err.strerror))
+                    break
 
 
 def main():

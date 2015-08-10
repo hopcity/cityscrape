@@ -6,7 +6,7 @@ Scrape open data sources provided by the city of Saint Louis. Load data into a P
 
   - clone the project
   - `vagrant up`
-  - Magic!
+  - `./cityscrape-setup.sh`
 
 # Deployment
 
