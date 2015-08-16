@@ -69,3 +69,5 @@ cityscrape/*
 # Tempfiles
 *.zip
 *.tmp
+
+workdir/*

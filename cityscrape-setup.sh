@@ -6,11 +6,12 @@ CONFIGFILE="config/cityscrape-config.sh"
 . $CONFIGFILE
 
 # Create working directories for ingest
-if [ -d "$STL_CITY_DOWNLOAD_DIR" ]
+if [ -d "$DDL_FILES" ]
 then
-  echo "$STL_CITY_DOWNLOAD_DIR already exists"
+  echo "$DDL_FILES already exists"
 else
-  mkdir $STL_CITY_DOWNLOAD_DIR
+  mkdir $WORKDIR
+  mkdir $DDL_FILES
 fi
 
 # Need to install virtualenv first
@@ -30,6 +31,5 @@ fi
 # Install Python libraries
 pip install beautifulsoup4==4.4.0
 pip install requests==2.7.0
-pip install wget==2.2
 
-echo "Cityscrape setup complete!"
+# Add the create database stuff here
