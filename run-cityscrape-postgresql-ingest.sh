@@ -40,9 +40,9 @@ for f in *.mdb
 
 			mdb-export -D ‘%%Y-%%m-%%d %%H:%%M:%%S’ -I postgress -q \’ -R \; $f $i | psql -d city -U postgres -w -h localhost
 
-	done
+		done
 
-done
+	done
 
 # # return to project root $BASEDIR
 popd

@@ -19,5 +19,6 @@ export SOURCEFILE_URL='http://dynamic.stlouis-mo.gov/citydata/downloads/'
 # temporary file download and extraction before loading into database
 export WORKDIR=$BASEDIR/workdir
 export DDL_FILES=$WORKDIR/ddl
-export $DDL_FILE_SUFFIX=".sql"
+export DDL_FILE_SUFFIX=""
 
+export SHAPEFILE_MANIFEST=shp_file.manifest
