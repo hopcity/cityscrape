@@ -6,6 +6,7 @@ pushd $DDL_FILES
 
 mdb_files=$(echo `ls *.mdb 2>/dev/null`)
 
+# Create SQL files out of mdb files
 if [[ -z "$mdb_files" ]]; then
   echo "No MDB Schema Definitions Found, Exiting..."
   exit 3
@@ -16,7 +17,8 @@ else
     done
 fi
 
-sql_files=$(echo `ls *.sql 2>/dev/null`)
+# Pass SQL files to psql and execute against db
+sql_files=$(echo `ls *postgres.sql 2>/dev/null`)
 if [[ -z "$sql_files" ]]; then
   echo "No Postgres Schema DDL, Exiting..."
   exit 3
